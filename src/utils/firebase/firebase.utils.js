@@ -67,7 +67,7 @@ export const addToCollectionAndDocument = async (
 
   await batch.commit();
 
-  console.log("done");
+  //console.log("done");
 };
 
 // download data from the cloud data base into the user interface
