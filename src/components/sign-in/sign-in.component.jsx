@@ -43,6 +43,7 @@ const SingIn = () => {
 
     try {
       const { user } = await signInWithEmailAndPass(email, passWord);
+      console.log(user);
       resetSignInFields();
     } catch (error) {
       switch (error.code) {
