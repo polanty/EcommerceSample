@@ -1,6 +1,6 @@
 import { createContext, useEffect, useReducer } from "react";
 
-const addToCart = (cartItems, productToAdd) => {
+export const addToCart = (cartItems, productToAdd) => {
   //find if cartItems contains productsToAdd
   const findExistingItem = cartItems.find((cartItem) => {
     return productToAdd.id === cartItem.id;
@@ -17,7 +17,7 @@ const addToCart = (cartItems, productToAdd) => {
   return [...cartItems, { ...productToAdd, quantity: 1 }];
 };
 
-const removeSingleCartItem = (cartItems, productToRemove) => {
+export const removeSingleCartItem = (cartItems, productToRemove) => {
   const findExistingItem = cartItems.find((cartItem) => {
     return productToRemove.id === cartItem.id;
   });
@@ -35,7 +35,7 @@ const removeSingleCartItem = (cartItems, productToRemove) => {
 
 const initialValue = 0;
 // Pass a function to map
-const myCartTotal = (array) => {
+export const myCartTotal = (array) => {
   return array
     .map((x) => x.quantity)
     .reduce(
@@ -44,7 +44,7 @@ const myCartTotal = (array) => {
     );
 };
 
-const removeItem = (cartItems, productToRemove) => {
+export const removeItem = (cartItems, productToRemove) => {
   const findExistingItem = cartItems.find((cartItem) => {
     return productToRemove.id === cartItem.id;
   });
@@ -54,7 +54,7 @@ const removeItem = (cartItems, productToRemove) => {
   }
 };
 
-const TotalBalance = (cartItems) => {
+export const TotalBalance = (cartItems) => {
   return cartItems
     .map((cartitem) => cartitem.quantity * cartitem.price)
     .reduce(

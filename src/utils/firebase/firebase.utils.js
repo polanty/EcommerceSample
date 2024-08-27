@@ -1,3 +1,4 @@
+//import { format } from "date-fns";
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -34,7 +35,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const fireBaseApp = initializeApp(firebaseConfig);
-console.log(fireBaseApp, Firestore);
+// console.log(fireBaseApp, Firestore);
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -78,14 +79,17 @@ export const getCollectionFromCloud = async () => {
 
   //getting the document collection from cloud storage
   const querySnapShot = await getDocs(theQuery);
+  // await Promise.reject(new Error("new error woops"));
 
-  const categoryMap = querySnapShot.docs.reduce((acc, snapShot) => {
-    const { title, items } = snapShot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
+  return querySnapShot.docs.map((docSnapShot) => docSnapShot.data());
 
-  return categoryMap;
+  // .reduce((acc, snapShot) => {
+  //   const { title, items } = snapShot.data();
+  //   acc[title.toLowerCase()] = items;
+  //   return acc;
+  // }, {});
+
+  // return categoryMap;
 };
 
 export const createUserDocumentFromPopUp = async (
@@ -94,7 +98,7 @@ export const createUserDocumentFromPopUp = async (
 ) => {
   const userDocRef = doc(db, "users", userAuth.uid);
 
-  console.log(userDocRef);
+  // console.log(userDocRef);
 
   const userSnapDoc = await getDoc(userDocRef);
 
@@ -102,6 +106,7 @@ export const createUserDocumentFromPopUp = async (
   if (!userSnapDoc.exists()) {
     const { displayName, email } = userAuth;
     const createdDate = new Date();
+    //const formattedDate = format(today, "yyyy-MM-dd");
 
     try {
       await setDoc(userDocRef, {
@@ -115,7 +120,7 @@ export const createUserDocumentFromPopUp = async (
     }
   }
 
-  return userDocRef;
+  return userSnapDoc;
 };
 
 //method to input details using email and password with firebase inbuilt createuserwithemailandpasword
@@ -126,7 +131,9 @@ export const createUserWithEmailAndPass = async (email, password) => {
 };
 
 export const signInWithEmailAndPass = async (email, password) => {
-  if (!email || !password) return;
+  if (!email || !password) {
+    throw new Error(" Username or Password must be entered");
+  }
 
   return await signInWithEmailAndPassword(auth, email, password);
 };
@@ -140,4 +147,17 @@ export const onAuthStateChangedListener = (callback) => {
 
 export const signOutUser = async () => {
   await signOut(auth);
+};
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
 };

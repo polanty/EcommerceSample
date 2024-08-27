@@ -5,13 +5,21 @@ import {
   CartMessageContainer,
 } from "./cart-dropdown.style.jsx";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.styles";
+import { useSelector } from "react-redux";
+import { cartSelectorReducer } from "../../store/cart/cart.selector.js";
 import CartItems from "../cart-items/cart-items.components";
-import { useContext } from "react";
-import { CardToggle } from "../../contexts/cardToggle.context";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+// import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const CartDropDown = () => {
-  const { cartItems } = useContext(CardToggle);
+  const cartItems = useSelector(cartSelectorReducer);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("Checkout");
+  };
 
   return (
     <CartDropDownContainer>
@@ -26,14 +34,15 @@ const CartDropDown = () => {
           ))
         )}
       </CartItemMessage>
-      <Link to="Checkout">
-        <Button
-          buttonType={BUTTON_TYPE_CLASSES.inverted}
-          style={{ marginTop: 10 }}
-        >
-          GO TO CHECKOUT
-        </Button>
-      </Link>
+      {/* <NavLink to="Checkout"> */}
+      <Button
+        buttonType={BUTTON_TYPE_CLASSES.inverted}
+        style={{ marginTop: 10 }}
+        onClick={handleClick}
+      >
+        GO TO CHECKOUT
+      </Button>
+      {/* </NavLink> */}
     </CartDropDownContainer>
   );
 };

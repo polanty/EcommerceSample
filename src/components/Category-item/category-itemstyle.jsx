@@ -29,8 +29,10 @@ export const BackgroundImage = styled.div`
   height: 100%;
   background-size: cover;
   background-position: center;
-  background-image: ${({ imageurl }) => `Url(${imageurl})`};
+  background-image: url(${(props) => props.$imageUrl});
 `;
+
+//background-image: ${({ imageUrl }) => `url(${imageUrl})`};
 
 export const CategoryContainer = styled.div`
   min-width: 30%;

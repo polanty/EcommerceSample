@@ -1,26 +1,31 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { Userprovider } from "./contexts/user.context";
-import { CategoriesContextProvider } from "./contexts/product.context";
-import { CardToggleProvider } from "./contexts/cardToggle.context";
-
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/lib/integration/react";
+import { persistStore } from "redux-persist";
+import store from "./store/store";
 import "./index.scss";
 import App from "./App";
+import { Elements } from "@stripe/react-stripe-js";
+import { stripePromise } from "./utils/stripe/stripe.utils";
 import reportWebVitals from "./reportWebVitals";
 
+let persistor = persistStore(store);
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Userprovider>
-        <CategoriesContextProvider>
-          <CardToggleProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <Elements stripe={stripePromise}>
             <App />
-          </CardToggleProvider>
-        </CategoriesContextProvider>
-      </Userprovider>
-    </BrowserRouter>
+          </Elements>
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
   </React.StrictMode>
 );
 

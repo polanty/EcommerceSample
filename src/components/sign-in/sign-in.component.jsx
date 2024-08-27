@@ -1,4 +1,6 @@
 import { useState } from "react"; // have to import useeffect if you wanna make use of getRedirectResult below
+import { useDispatch } from "react-redux";
+import { onGoogleUserSignIn } from "../../store/user/use.saga";
 
 import {
   // auth,
@@ -13,12 +15,19 @@ import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../components/button/button.styles";
 
+import {
+  googleSignInStart,
+  emailSignStart,
+} from "../../store/userDispatch.action";
+
 const defaultDetails = {
   email: "",
   passWord: "",
 };
 
 const SingIn = () => {
+  const dispatch = useDispatch();
+
   const [formField, setFormFields] = useState(defaultDetails);
 
   const { email, passWord } = formField;
@@ -31,7 +40,8 @@ const SingIn = () => {
   };
 
   const signInWithGoogle = async () => {
-    await signInWithGooglePopUp();
+    //await signInWithGooglePopUp();
+    dispatch(googleSignInStart());
   };
 
   const resetSignInFields = () => {
@@ -42,8 +52,7 @@ const SingIn = () => {
     event.preventDefault();
 
     try {
-      const { user } = await signInWithEmailAndPass(email, passWord);
-      console.log(user);
+      // dispatch(emailSignStart(email, passWord));
       resetSignInFields();
     } catch (error) {
       switch (error.code) {

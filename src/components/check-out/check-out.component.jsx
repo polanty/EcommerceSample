@@ -1,14 +1,24 @@
 import "./check-out.styles.scss";
-import { useContext } from "react";
-import { CardToggle } from "../../contexts/cardToggle.context";
+import { useDispatch, useSelector } from "react-redux";
+import { cartSelectorReducer } from "../../store/cart/cart.selector";
+import {
+  removeItemFromCart,
+  removeSingleItemFromCart,
+  addItemsToCart,
+} from "../../store/cart/cart.action";
+
+import paymentForm from "../payment-folder/payment-components.component";
 
 const CheckOutComponent = ({ item }) => {
-  const { removeFromCartList, addToCartItem, removefromCartItem } =
-    useContext(CardToggle);
+  const cartItem = useSelector(cartSelectorReducer);
+  console.log(cartItem);
+  const dispatch = useDispatch();
+
   const { name, imageUrl, price, quantity } = item;
-  const clearItemHandler = () => removeFromCartList(item);
-  const addItemstoCart = () => addToCartItem(item);
-  const removeItemsFromCart = () => removefromCartItem(item);
+  const clearItemHandler = () => dispatch(removeItemFromCart(cartItem, item));
+  const addItemstoCart = () => dispatch(addItemsToCart(cartItem, item));
+  const removeItemsFromCart = () =>
+    dispatch(removeSingleItemFromCart(cartItem, item));
 
   return (
     <div className="checkout-item-container">
@@ -29,6 +39,8 @@ const CheckOutComponent = ({ item }) => {
       <div className="remove-button" onClick={clearItemHandler}>
         &#10005;
       </div>
+
+      <paymentForm />
     </div>
   );
 };

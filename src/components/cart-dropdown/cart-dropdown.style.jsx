@@ -11,7 +11,7 @@ export const CartDropDownContainer = styled.div`
   background-color: white;
   top: 90px;
   right: 40px;
-  z-index: 5;
+  z-ex: 5;
 `;
 
 export const CartItemMessage = styled.div`
@@ -42,7 +42,7 @@ export const CartMessageContainer = styled.div`
 //   background-color: white;
 //   top: 90px;
 //   right: 40px;
-//   z-index: 5;
+//   z-ex: 5;
 
 //   .empty-message {
 //     font-size: 1rem;

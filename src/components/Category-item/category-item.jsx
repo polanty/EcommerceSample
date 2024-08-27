@@ -11,7 +11,7 @@ const CategoryItem = ({ category }) => {
   const NavigatorRoute = () => navigate(route);
   return (
     <CategoryContainer onClick={NavigatorRoute}>
-      <BackgroundImage imageurl={imageUrl} />
+      <BackgroundImage $imageUrl={imageUrl} />
       <CategoryBodyContainer>
         <h1>{title}</h1>
         <p>Shop now</p>

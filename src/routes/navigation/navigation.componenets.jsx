@@ -1,11 +1,13 @@
 import { Fragment, useContext } from "react";
 import { Outlet } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { ReactComponent as CrownLogo } from "../../assets/crown.svg";
 import CartIcon from "../../components/cart-icon/cartIcon.component";
 import CartDropDown from "../../components/cart-dropdown/cart-dropdown.component";
-import { UserContext } from "../../contexts/user.context";
-import { signOutUser } from "../../utils/firebase/firebase.utils";
-import { CardToggle } from "../../contexts/cardToggle.context";
+import { cartToggleSelector } from "../../store/cart/cart.selector";
+import { signOutStart } from "../../store/userDispatch.action";
+// import { signOutUser } from "../../utils/firebase/firebase.utils";
+// import { CardToggle } from "../../contexts/cardToggle.context";
 import {
   NavLink,
   NavigationContainer,
@@ -14,8 +16,14 @@ import {
 } from "./navigation.styles";
 
 const Navigation = () => {
-  const { currentUser } = useContext(UserContext);
-  const { isCartOpen } = useContext(CardToggle);
+  const dispatch = useDispatch();
+  // const { currentUser } = useContext(UserContext);
+  const currentUser = useSelector((state) => state.users.currentUser);
+
+  // console.log(currentUser);
+  const isCartOpen = useSelector(cartToggleSelector);
+
+  const signUserOutOfApp = () => dispatch(signOutStart());
 
   return (
     <Fragment>
@@ -25,13 +33,13 @@ const Navigation = () => {
           <CrownLogo className="logo" />
         </LogoContainer>
         <NavigationContainer>
-          <NavLink to="Shop">Shop</NavLink>
+          <NavLink to="/Shop">Shop</NavLink>
           {currentUser ? (
-            <NavLink as="span" onClick={signOutUser}>
+            <NavLink as="span" onClick={signUserOutOfApp}>
               Sign Out
             </NavLink>
           ) : (
-            <NavLink to="SignIn">Sign In</NavLink>
+            <NavLink to="/SignIn">Sign In</NavLink>
           )}
           <CartIcon />
         </NavigationContainer>

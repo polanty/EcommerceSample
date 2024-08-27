@@ -1,11 +1,16 @@
 import "./checkout.styles.scss";
-import { useContext } from "react";
-import { CardToggle } from "../../contexts/cardToggle.context";
+import { useSelector } from "react-redux";
+import {
+  cartSelectorReducer,
+  selectCartTotal,
+} from "../../store/cart/cart.selector";
 //import Button from "../../components/button/button.styles";
+import PaymentForm from "../../components/payment-folder/payment-components.component";
 import CheckOutComponent from "../../components/check-out/check-out.component";
 
 const Checkout = () => {
-  const { cartItems, totalBalance } = useContext(CardToggle);
+  const cartItems = useSelector(cartSelectorReducer);
+  const totalBalance = useSelector(selectCartTotal);
 
   return (
     <div className="checkout-container">
@@ -31,6 +36,8 @@ const Checkout = () => {
         return <CheckOutComponent item={cartItem} key={cartItem.id} />;
       })}
       <span className="total">{`Total: ${totalBalance} $`}</span>
+
+      <PaymentForm />
     </div>
   );
 };
