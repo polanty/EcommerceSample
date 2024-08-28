@@ -11,7 +11,7 @@ import CartItems from "../cart-items/cart-items.components";
 import { useNavigate } from "react-router-dom";
 
 // import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+//import { NavLink } from "react-router-dom";
 
 const CartDropDown = () => {
   const cartItems = useSelector(cartSelectorReducer);

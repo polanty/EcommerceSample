@@ -4,16 +4,16 @@ import Button, { BUTTON_TYPE_CLASSES } from "../button/button.styles";
 import { FormContainer, PaymentFormContainer } from "./payment-form.styles";
 
 const PaymentForm = () => {
-  const stripe = useStripe();
-  const elements = useElements();
+  // const stripe = useStripe();
+  // const elements = useElements();
 
-  const paymentHandler = async (e) => {
-    e.preventDefault();
+  // const paymentHandler = async (e) => {
+  //   e.preventDefault();
 
-    if (!stripe || !elements) {
-      return;
-    }
-  };
+  //   if (!stripe || !elements) {
+  //     return;
+  //   }
+  // };
 
   return (
     <PaymentFormContainer>
