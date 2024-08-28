@@ -42,6 +42,7 @@
     ],
     "rules": {
       "react/react-in-jsx-scope": "off",
+      "no-unused-vars": "warn",
       "react/jsx-filename-extension": [
         "error",
         {
@@ -67,7 +68,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "babel-plugin-react-require": "^4.0.3",
+    ".eslintrc": "^4.0.3",
     "react-router-dom": "^6.8.1"
   }
 }
