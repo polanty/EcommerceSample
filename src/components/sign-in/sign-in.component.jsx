@@ -1,13 +1,5 @@
 import { useState } from "react"; // have to import useeffect if you wanna make use of getRedirectResult below
 import { useDispatch } from "react-redux";
-import { onGoogleUserSignIn } from "../../store/user/use.saga";
-
-import {
-  // auth,
-  signInWithGooglePopUp,
-  //createUserDocumentFromPopUp,
-  signInWithEmailAndPass,
-} from "../../utils/firebase/firebase.utils";
 
 import "../sign-in/sign-in.styles.scss";
 import FormEntry from "../../components/form-entry/form.component";
@@ -15,10 +7,7 @@ import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../components/button/button.styles";
 
-import {
-  googleSignInStart,
-  emailSignStart,
-} from "../../store/userDispatch.action";
+import { googleSignInStart } from "../../store/userDispatch.action";
 
 const defaultDetails = {
   email: "",

@@ -1,14 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import {
-  onAuthStateChangedListener,
-  createUserDocumentFromPopUp,
-  getCurrentUser,
-  signOutUser,
-} from "./utils/firebase/firebase.utils";
-import { setCategories } from "./store/categories/category-action";
-import { setCurrentUser } from "./store/userDispatch.action";
+
 import Home from "./routes/home/hompage.component";
 import Navigation from "./routes/navigation/navigation.componenets";
 import Shop from "./routes/shop/shop.routes";
@@ -26,7 +19,7 @@ const App = () => {
     // getCurrentUser()
     //   .then((user) => console.log(user))
     //   .then((user) => user.data());
-  }, []);
+  });
 
   return (
     <Routes>

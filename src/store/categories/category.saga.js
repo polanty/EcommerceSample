@@ -3,7 +3,7 @@ import { getCollectionFromCloud } from "../../utils/firebase/firebase.utils";
 import { categoryReducerDefault } from "./category-reducer";
 import {
   fetchCategoriesFailure,
-  fetchCategoriesStart,
+  // fetchCategoriesStart,
   fetchCategoriesSuccess,
 } from "./category-action";
 

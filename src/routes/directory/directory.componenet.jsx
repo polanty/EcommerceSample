@@ -7,7 +7,7 @@ import Spinner from "../../components/spinner/spinner.components";
 import CardProductComponent from "../../components/products/products.component";
 import {
   SelectCategoryIsloading,
-  SelectCategoryErrorMessage,
+  // SelectCategoryErrorMessage,
 } from "../../store/categories/category-snapshot-data";
 
 const Directory = () => {
@@ -15,9 +15,9 @@ const Directory = () => {
   // const { categories } = useContext(categoriesContext);
   const categories = useSelector(selectCategoryMap);
   const isLoading = useSelector(SelectCategoryIsloading);
-  const fetchError = useSelector(SelectCategoryErrorMessage);
+  // const fetchError = useSelector(SelectCategoryErrorMessage);
   const [products, setProducts] = useState(categories[category]);
-  const [error, setError] = useState(fetchError);
+  // const [error, setError] = useState(fetchError);
 
   useEffect(() => {
     setProducts(categories[category]);

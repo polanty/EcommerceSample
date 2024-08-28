@@ -13,7 +13,7 @@ const Shop = () => {
   useEffect(() => {
     //dispatch the thunk using the regular dispatch
     dispatch(fetchCategoriesStart());
-  }, []);
+  });
 
   //dispatch function to get the categories from the cloud
   // useEffect(() => {
