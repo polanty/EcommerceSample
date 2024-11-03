@@ -6,8 +6,8 @@ import { useDispatch } from "react-redux";
 // } from "../../utils/firebase/firebase.utils";
 import FormEntry from "../form-entry/form.component";
 import "../signIn-form/signUp.styles.scss";
-import Button, { BUTTON_TYPE_CLASSES } from "../button/button.styles.jsx";
-import { signUpStart } from "../../store/userDispatch.action.js";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/button.styles";
+import { signUpStart } from "../../store/userDispatch.action";
 
 const defaultFormFields = {
   displayName: "",

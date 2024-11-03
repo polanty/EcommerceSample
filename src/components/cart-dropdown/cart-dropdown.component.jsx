@@ -6,7 +6,7 @@ import {
 } from "./cart-dropdown.style.jsx";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.styles";
 import { useSelector } from "react-redux";
-import { cartSelectorReducer } from "../../store/cart/cart.selector.js";
+import { cartSelectorReducer } from "../../store/cart/cart.selector";
 import CartItems from "../cart-items/cart-items.components";
 import { useNavigate } from "react-router-dom";
 

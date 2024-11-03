@@ -1,6 +1,6 @@
-import { takeLatest, all, call, put } from "redux-saga/effects";
+import { takeLatest, all, call, put } from "typed-redux-saga/macro";
 import { getCollectionFromCloud } from "../../utils/firebase/firebase.utils";
-import { categoryReducerDefault } from "./category-reducer";
+import { categoryReducerDefault } from "./category-actionCallers";
 import {
   fetchCategoriesFailure,
   // fetchCategoriesStart,
@@ -31,29 +31,35 @@ import {
 //   };
 // };
 
+// Define an interface for serialized error
+interface SerializedError {
+  message: string;
+  stack?: string;
+  // Add any other properties you might need here
+}
+
 export function* fetchCategoriesAsynch() {
   try {
-    const categoryMapArray = yield call(getCollectionFromCloud, "categories");
+    const categoryMapArray = yield* call(getCollectionFromCloud, "categories");
 
-    yield put(fetchCategoriesSuccess(categoryMapArray));
+    yield* put(fetchCategoriesSuccess(categoryMapArray));
   } catch (error) {
-    const serializedError = {
-      message: error.message,
-      stack: error.stack,
-      // Add any other properties you need
+    const serializedError: SerializedError = {
+      message: (error as Error).message,
+      stack: (error as Error).stack,
     };
 
-    yield put(fetchCategoriesFailure(serializedError));
+    yield* put(fetchCategoriesFailure(serializedError as Error));
   }
 }
 
 export function* onFetchCategories() {
-  yield takeLatest(
+  yield* takeLatest(
     categoryReducerDefault.FETCH_CATEGORIES_START,
     fetchCategoriesAsynch
   );
 }
 
 export function* CategoriesSaga() {
-  yield all([call(onFetchCategories)]);
+  yield* all([call(onFetchCategories)]);
 }

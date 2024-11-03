@@ -9,6 +9,10 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^22.5.4",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
     "dotenv": "^16.4.5",
     "eslint-config-react-app": "^7.0.1",
     "firebase": "^10.13.0",
@@ -27,6 +31,8 @@
     "stripe": "^16.8.0",
     "styled-component": "^2.8.0",
     "styled-components": "^6.0.7",
+    "typed-redux-saga": "^1.5.0",
+    "typescript": "^5.5.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -68,6 +74,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "babel-plugin-macros": "^3.1.0",
     "react-router-dom": "^6.8.1"
   }
 }

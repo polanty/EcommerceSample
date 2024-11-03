@@ -9,6 +9,8 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  User,
+  NextOrObserver,
 } from "firebase/auth";
 
 import {
@@ -20,7 +22,11 @@ import {
   writeBatch,
   query,
   getDocs,
+  QueryDocumentSnapshot,
+  Firestore,
 } from "firebase/firestore";
+
+import { Category } from "../../store/categories/category-reducer";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -43,27 +49,30 @@ googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 
-export const auth = new getAuth();
+export const auth = getAuth();
 export const signInWithGooglePopUp = () =>
   signInWithPopup(auth, googleProvider);
 export const signInWithGoogleRedirect = () =>
   signInWithRedirect(auth, googleProvider);
 
-export const db = new getFirestore();
+export const db = getFirestore();
+
+export type objectToAdd = {
+  title: string;
+};
 
 // push data from files to the cloud data base
-export const addToCollectionAndDocument = async (
-  collectionKey,
-  objectsToAdd,
-  field = "title"
-) => {
+export const addToCollectionAndDocument = async <T extends objectToAdd>(
+  collectionKey: string,
+  objectsToAdd: T[]
+): Promise<void> => {
   const collectionReference = collection(db, collectionKey);
 
   // guarantee the objects are set in place in the data base
   const batch = writeBatch(db);
 
   objectsToAdd.forEach((object) => {
-    const docRef = doc(collectionReference, object[field].toLowerCase());
+    const docRef = doc(collectionReference, object.title.toLowerCase());
     batch.set(docRef, object);
   });
 
@@ -73,7 +82,7 @@ export const addToCollectionAndDocument = async (
 };
 
 // download data from the cloud data base into the user interface
-export const getCollectionFromCloud = async () => {
+export const getCollectionFromCloud = async (): Promise<Category[]> => {
   const collections = collection(db, "categories");
   const theQuery = query(collections);
 
@@ -81,7 +90,9 @@ export const getCollectionFromCloud = async () => {
   const querySnapShot = await getDocs(theQuery);
   // await Promise.reject(new Error("new error woops"));
 
-  return querySnapShot.docs.map((docSnapShot) => docSnapShot.data());
+  return querySnapShot.docs.map(
+    (docSnapShot) => docSnapShot.data() as Category
+  );
 
   // .reduce((acc, snapShot) => {
   //   const { title, items } = snapShot.data();
@@ -92,10 +103,20 @@ export const getCollectionFromCloud = async () => {
   // return categoryMap;
 };
 
+export type AdditionalInformation = {
+  displayName?: string;
+};
+
+export type UserData = {
+  createdAt: Date;
+  displayName: string;
+  email: string;
+};
+
 export const createUserDocumentFromPopUp = async (
-  userAuth,
-  additionalInfo = {}
-) => {
+  userAuth: User,
+  additionalInfo = {} as AdditionalInformation
+): Promise<void | QueryDocumentSnapshot<UserData>> => {
   const userDocRef = doc(db, "users", userAuth.uid);
 
   // console.log(userDocRef);
@@ -116,21 +137,27 @@ export const createUserDocumentFromPopUp = async (
         ...additionalInfo,
       });
     } catch (error) {
-      console.log("an error occured:", error.message);
+      console.log("an error occured:", error);
     }
   }
 
-  return userSnapDoc;
+  return userSnapDoc as QueryDocumentSnapshot<UserData>;
 };
 
 //method to input details using email and password with firebase inbuilt createuserwithemailandpasword
-export const createUserWithEmailAndPass = async (email, password) => {
+export const createUserWithEmailAndPass = async (
+  email: string,
+  password: string
+) => {
   if (!email || !password) return;
 
   return await createUserWithEmailAndPassword(auth, email, password);
 };
 
-export const signInWithEmailAndPass = async (email, password) => {
+export const signInWithEmailAndPass = async (
+  email: string,
+  password: string
+) => {
   if (!email || !password) {
     throw new Error(" Username or Password must be entered");
   }
@@ -138,7 +165,7 @@ export const signInWithEmailAndPass = async (email, password) => {
   return await signInWithEmailAndPassword(auth, email, password);
 };
 
-export const onAuthStateChangedListener = (callback) => {
+export const onAuthStateChangedListener = (callback: NextOrObserver<User>) => {
   if (!callback) return;
   onAuthStateChanged(auth, callback);
 };
@@ -149,7 +176,7 @@ export const signOutUser = async () => {
   await signOut(auth);
 };
 
-export const getCurrentUser = () => {
+export const getCurrentUser = (): Promise<User | null> => {
   return new Promise((resolve, reject) => {
     const unsubscribe = onAuthStateChanged(
       auth,

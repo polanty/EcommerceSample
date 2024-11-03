@@ -7,8 +7,6 @@ import {
   addItemsToCart,
 } from "../../store/cart/cart.action";
 
-// import paymentForm from "../payment-folder/payment-components.component";
-
 const CheckOutComponent = ({ item }) => {
   const cartItem = useSelector(cartSelectorReducer);
   console.log(cartItem);
@@ -40,7 +38,7 @@ const CheckOutComponent = ({ item }) => {
         &#10005;
       </div>
 
-      <paymentForm />
+      {/* payment form container */}
     </div>
   );
 };

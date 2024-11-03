@@ -1,8 +1,10 @@
 import { createSelector } from "reselect";
 import { TotalBalance, myCartTotal } from "../../contexts/cardToggle.context";
+import { CartState } from "./cart.reducer";
+import { Rootstate } from "../store";
 
 //the default value of the cartItem
-const cartSelector = (state) => state.cart;
+const cartSelector = (state: Rootstate): CartState => state.cart;
 
 export const cartSelectorReducer = createSelector(
   [cartSelector],
