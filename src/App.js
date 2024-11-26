@@ -1,13 +1,19 @@
 import { Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { useDispatch } from "react-redux";
-
-import Home from "./routes/home/hompage.component";
-import Navigation from "./routes/navigation/navigation.componenets";
-import Shop from "./routes/shop/shop.routes";
-import Auth from "./routes/authentication/authentication.components";
-import Checkout from "./routes/checkout/checkout.route";
+import Spinner from "./components/spinner/spinner.components";
 import { createUserSession } from "./store/userDispatch.action";
+import { GlobalStyle } from "./global.styles";
+
+const Home = lazy(() => import("./routes/home/hompage.component"));
+const Navigation = lazy(() =>
+  import("./routes/navigation/navigation.componenets")
+);
+const Shop = lazy(() => import("./routes/shop/shop.routes"));
+const Auth = lazy(() =>
+  import("./routes/authentication/authentication.components")
+);
+const Checkout = lazy(() => import("./routes/checkout/checkout.route"));
 
 const App = () => {
   //usedispatch
@@ -22,14 +28,17 @@ const App = () => {
   });
 
   return (
-    <Routes>
-      <Route path="/" element={<Navigation />}>
-        <Route index element={<Home />}></Route>
-        <Route path="Shop/*" element={<Shop />}></Route>
-        <Route path="SignIn" element={<Auth />}></Route>
-        <Route path="Checkout" element={<Checkout />}></Route>
-      </Route>
-    </Routes>
+    <Suspense fallback={<Spinner />}>
+      <GlobalStyle />
+      <Routes>
+        <Route path="/" element={<Navigation />}>
+          <Route index element={<Home />}></Route>
+          <Route path="Shop/*" element={<Shop />}></Route>
+          <Route path="SignIn" element={<Auth />}></Route>
+          <Route path="Checkout" element={<Checkout />}></Route>
+        </Route>
+      </Routes>
+    </Suspense>
   );
 };
 

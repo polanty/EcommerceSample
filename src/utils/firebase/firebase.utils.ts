@@ -11,6 +11,7 @@ import {
   signOut,
   User,
   NextOrObserver,
+  UserCredential,
 } from "firebase/auth";
 
 import {
@@ -108,9 +109,11 @@ export type AdditionalInformation = {
 };
 
 export type UserData = {
-  createdAt: Date;
+  createdAt?: Date;
   displayName: string;
   email: string;
+  id?: string;
+  password?: string;
 };
 
 export const createUserDocumentFromPopUp = async (

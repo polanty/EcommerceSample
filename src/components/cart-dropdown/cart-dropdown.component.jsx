@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import {
   CartDropDownContainer,
   CartItemMessage,
@@ -17,9 +18,9 @@ const CartDropDown = () => {
   const cartItems = useSelector(cartSelectorReducer);
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     navigate("Checkout");
-  };
+  }, []);
 
   return (
     <CartDropDownContainer>

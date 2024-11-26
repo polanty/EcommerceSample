@@ -11,7 +11,7 @@ export const CartDropDownContainer = styled.div`
   background-color: white;
   top: 90px;
   right: 40px;
-  z-ex: 5;
+  z-index: 5;
 `;
 
 export const CartItemMessage = styled.div`

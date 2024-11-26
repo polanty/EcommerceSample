@@ -1,12 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { cartToggleSelector } from "../../store/cart/cart.selector";
-import { selectCartCount } from "../../store/cart/cart.selector";
-import { setIsCartOpen } from "../../store/cart/cart.action";
 import {
-  CartIconContainer,
-  ItemCount,
-  ShoppingBasket,
-} from "./cartIcon.style.jsx";
+  cartToggleSelector,
+  selectCartCount,
+} from "../../store/cart/cart.selector";
+import { setIsCartOpen } from "../../store/cart/cart.action";
+import { CartIconContainer, ItemCount, ShoppingBasket } from "./cartIcon.style";
 
 const CartIcon = () => {
   const dispatch = useDispatch();

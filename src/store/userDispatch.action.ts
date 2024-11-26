@@ -1,3 +1,4 @@
+import { User } from "firebase/auth";
 import {
   createAction,
   withMatcher,
@@ -41,7 +42,7 @@ export type SetCurrentUser = actionWithPayload<
 
 //then we create their actions
 export const setCurrentUser = withMatcher(
-  (user: UserData): SetCurrentUser =>
+  (user: UserData & { id: string }): SetCurrentUser =>
     createAction(User_Action_Types.SET_CURRENT_USER, user)
 );
 
@@ -100,16 +101,21 @@ export type SignUpStartObject = {
   email: string;
   password: string;
   displayName: string;
+  createdAt?: Date;
 };
 
 // Firstly we create our action returns
 export type SignUpEmailStart = actionWithPayload<
   User_Action_Types.SIGN_UP_USER_START,
-  UserData
+  {
+    email: string;
+    password: string;
+    displayName: string;
+  }
 >;
 
 export const signUpStart = withMatcher(
-  (email: string, password: string, displayName: string) =>
+  (email: string, password: string, displayName: string): SignUpEmailStart =>
     createAction(User_Action_Types.SIGN_UP_USER_START, {
       email,
       password,
@@ -119,11 +125,11 @@ export const signUpStart = withMatcher(
 
 export type SignUpsuccess = actionWithPayload<
   User_Action_Types.SIGN_UP_SUCESS,
-  { user: UserData; additionalDetails: AdditionalInformation }
+  { user: User; additionalDetails: AdditionalInformation }
 >;
 
 export const signUpSucess = withMatcher(
-  (user: UserData, additionalDetails: AdditionalInformation): SignUpsuccess =>
+  (user: User, additionalDetails: AdditionalInformation): SignUpsuccess =>
     createAction(User_Action_Types.SIGN_UP_SUCESS, { user, additionalDetails })
 );
 
